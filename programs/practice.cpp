@@ -2,8 +2,9 @@
 using namespace std;
 
 int main() {
-    int num = 74434878793;
-    char ch = num;
-    cout << ch << endl;
+    int n=10;
+    if(cout << n) {
+        cout << "Love babbar" << endl;
+    }
     return 0;
 }
