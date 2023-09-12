@@ -20,6 +20,19 @@ void extremeElement(int arr[], int size) {
     return;
 }
 
+void extremePrint(int arr[],int n){
+    int low = 0;
+    int high = n-1;
+    while(low<=high){
+        cout<<arr[low]<<" ";
+        if(low == high) break;
+        cout<<arr[high]<<" ";
+        low++;
+        high--;
+    }
+    cout << endl;
+}
+
 int main() {
     int n;
     cin >> n;
@@ -31,10 +44,13 @@ int main() {
     
     cout <<"Normal print: ";
     printArray(arr, n);
-    
-    extremeElement(arr, n);
+
     cout <<"Extreme element first: ";
-    printArray(arr, n);
+    extremePrint(arr, n);
+    
+    // extremeElement(arr, n);
+    // cout <<"Extreme element first: ";
+    // printArray(arr, n);
 
     return 0;
 }
