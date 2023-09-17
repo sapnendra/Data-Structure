@@ -15,11 +15,11 @@ void swap(int arr[], int a, int b) {
 }
 
 void reverseArray(int arr[], int size) {
-    int i=0, j=size-1;
-    while(i<=j) {
-        swap(arr, i, j);
-        i++;
-        j--;
+    int left=0, right=size-1;
+    while(left<=right) {
+        swap(arr, left, right);
+        left++;
+        right--;
     }
 }
 

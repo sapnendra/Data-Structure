@@ -1,6 +1,18 @@
 #include<iostream>
 using namespace std;
 
+//  second method exist
+//  void rotate(vector<int>& nums, int k) {
+        // int size = nums.size();
+        // vector<int> ans(size);
+
+        // for(int index=0; index<size; index++) {
+        //     int newIndex = (index+k)%size;
+        //     ans[newIndex] = nums[index];
+        // }
+        // nums = ans;
+//  }
+
 void shiftArrayByKthPos(int arr[], int n, int k) {
     int temp[k];
     int itr = 0;
@@ -16,6 +28,7 @@ void shiftArrayByKthPos(int arr[], int n, int k) {
     for(int i=0; i<k; i++) {
         arr[i] = temp[i];
     }
+
     return;
 }
 
@@ -40,5 +53,6 @@ int main() {
     for(int i=0; i<n; i++) {
         cout << arr[i] << " ";
     }
+    cout << endl;
     return 0;
 }
