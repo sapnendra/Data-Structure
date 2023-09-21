@@ -4,7 +4,12 @@ using namespace std;
 
 
 int main() {
-    vector<int> vec;
-    cout << "Size of empty vector:" << vec.size() <<endl;
+    int a = 2;
+    
+    if(a&1) {
+        cout << "This is a odd number" << endl;
+    } else {
+        cout << "This is a even number" << endl;
+    }
     return 0;
 }
