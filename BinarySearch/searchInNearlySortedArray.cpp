@@ -17,6 +17,7 @@ int isTargetExistInArray(int arr[], int n, int target) {
             // right
             s = mid+2;
         } else {
+
             // left
             e = mid-2;
         }
