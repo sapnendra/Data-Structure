@@ -1,45 +1,63 @@
-#include <bits/stdc++.h>
-using namespace std;
+class Solution {
+public:
 
-vector<int> findClosest(int arr[], int n, int k, int x) {
-    vector<int> diff;
-    int idx = 0;
-    while(idx < n) {
-        diff.push_back(abs(x - arr[idx]));
-        idx++;
+    int lowerBound(vector<int>& arr, int x) {
+      int s = 0;
+      int e = arr.size()-1;
+      int ans = e;
+      while(s <= e) {
+        int mid = s + (e-s)/2;
+        if(arr[mid] >= x) {
+          ans = mid;
+          e = mid-1;
+        } else if(x > arr[mid]) {
+          s = mid+1;
+        } else {
+          e = mid-1;
+        }
+      }
+      return ans;
     }
 
-    vector<int> ans;
-    sort(diff.begin(), diff.end());
-    for(int i=0; i<k; i++) {
-        ans.push_back(diff[i]);
+    vector<int> bs_method(vector<int>& arr, int k, int x) {
+      int h = lowerBound(arr, x);
+      int l = h-1;
+      int ele = k;
+
+      while(ele--) {
+        if(l < 0) {
+          h++;
+        } else if(h >= arr.size()) {
+          l--;
+        } else if(x-arr[l] > arr[h]-x) {
+          h++;
+        } else {
+          l--;
+        }
+      }
+      return vector<int>(arr.begin()+l+1, arr.begin()+h);
     }
 
-    return ans;
-}
+    vector<int> twoPtr(vector<int>& arr, int k, int x) {
+      int l = 0;
+      int h = arr.size()-1;
+      while(h-l >= k) {
+        if(x - arr[l] > arr[h] - x) {
+          l++;
+        } else {
+          h--;
+        }
+      }
+      // vector<int> ans;
+      // for(int i=l; i<=h; i++) {
+      //   ans.push_back(arr[i]);
+      // }
 
-int main() {
-
-    int n;
-    cout << "Enter n: ";
-    cin >> n;
-    int arr[n];
-    for(int i=0; i<n; i++) {
-        cin >> arr[i];
+      return vector<int>(arr.begin()+l, arr.begin()+h+1);
     }
-    
-    int k;
-    cout << "Enter k: ";
-    cin >> k;
-    int x;
-    cout << "Enter x: ";
-    cin >> x;
 
-    vector<int> close = findClosest(arr, n, k, x); 
-
-    for(int i=0; i<k; i++) {
-        cout << close[i] << " ";
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        // return twoPtr(arr, k, x);
+        return bs_method(arr, k, x);
     }
-    
-    return 0;
-}
+};
