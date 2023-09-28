@@ -1,3 +1,6 @@
+#include<iostream>
+#include<vector>
+using namespace std;
 class Solution {
 public:
     int garbageCollection(vector<string>& garbage, vector<int>& travel) {
