@@ -5,17 +5,18 @@ class Solution
 {
     public:
     
-    bool isPossibleSolution(int a[], int n, int m, int sol) {
+    // this is the predicate function
+    bool isPossibleSolution(int a[], int n, int m, int mid) {
         int pageSum = 0;
-        int c = 1;
+        int count = 1;
         for(int i=0; i<n; i++) {
-            if(a[i] > sol) {
+            if(a[i] > mid) {
                 return false;
             }
-            if(pageSum + a[i] > sol) {
-                c++;
+            if(pageSum + a[i] > mid) {
+                count++;
                 pageSum = a[i];
-                if(c > m) {
+                if(count > m) {
                     return false;
                 }
             } else {
