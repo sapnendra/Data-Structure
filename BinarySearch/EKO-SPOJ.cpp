@@ -23,7 +23,7 @@ int findSawBledHeight(vector<long long int> trees, long long int m) {
     long long int end = *max_element(trees.begin(), trees.end());
     long long int ans = -1;
     
-    while(start <= end) {
+    while(true) {
         long long int mid = start + (end-start)/2;
         if(isPossibleSolution(trees, m, mid)) {
             ans = mid;
