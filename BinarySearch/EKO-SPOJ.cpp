@@ -24,7 +24,7 @@ int findSawBledHeight(vector<long long int> trees, long long int m) {
     long long int ans = -1;
     
     while(true) {
-        long long int mid = start + (end-start)/2;
+        long long int mid = start + (end-start)/2;  // mid is assumed as sawblade height
         if(isPossibleSolution(trees, m, mid)) {
             ans = mid;
             start = mid+1;
