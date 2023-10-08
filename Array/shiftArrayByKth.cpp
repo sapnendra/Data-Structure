@@ -1,17 +1,18 @@
 #include<iostream>
+#include<vector>
 using namespace std;
 
-//  second method exist
-//  void rotate(vector<int>& nums, int k) {
-        // int size = nums.size();
-        // vector<int> ans(size);
+ // second method exist
+ void rotate(vector<int>& nums, int k) {
+        int size = nums.size();
+        vector<int> ans(size);
 
-        // for(int index=0; index<size; index++) {
-        //     int newIndex = (index+k)%size;
-        //     ans[newIndex] = nums[index];
-        // }
-        // nums = ans;
-//  }
+        for(int index=0; index<size; index++) {
+            int newIndex = (index+k)%size;
+            ans[newIndex] = nums[index];
+        }
+        nums = ans;
+ }
 
 void shiftArrayByKthPos(int arr[], int n, int k) {
     int temp[k];
