@@ -1,4 +1,5 @@
 #include<iostream>
+#include<vector>
 using namespace std;
 
 int binarySearch(int arr[], int size, int target) {
@@ -95,12 +96,22 @@ int findLastUccurence(int arr[], int size, int target) {
     return ans;
 }
 
-int findTotalOccurence(int arr[], int n, int target) {
+void findAllIndexOfTarget(int arr[], int n, int target) {
     int firstOcc = findFirstUccurence(arr, n, target);
     int lastOcc = findLastUccurence(arr, n, target);
 
-    int totalOcc = lastOcc - firstOcc + 1;
-    return totalOcc;
+    if(firstOcc == -1) {
+        cout << -1 << " " << -1;
+    }
+
+    vector<int> ans;
+    for(int i=firstOcc; i<=lastOcc; i++) {
+        ans.push_back(i);
+    }
+
+    for(int i=0; i<ans.size(); i++) {
+        cout << ans[i] << " ";
+    }
 }
 
 int main() {
@@ -115,6 +126,21 @@ int main() {
     int target;
     cout <<"Enter your target element: ";
     cin >> target;
+
+    findAllIndexOfTarget(arr, n, target);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // cout << endl << "Finding your target: " << endl << endl;
     // int targetIndex = binarySearch(arr, n, target);
@@ -142,13 +168,13 @@ int main() {
     //     cout << "Your target element found at index: "<< lastOcc << endl;
     // }
 
-    cout << endl << "Finding total Occurence: " << endl << endl;;
-    int totalOcc = findTotalOccurence(arr, n, target);
+    // cout << endl << "Finding total Occurence: " << endl << endl;;
+    // int totalOcc = findTotalOccurence(arr, n, target);
 
-    if(totalOcc == -1) {
-        cout << "Element not found!" << endl;
-    } else {
-        cout << "Your target element found in total " << totalOcc << " indexes" << endl;
-    }
+    // if(totalOcc == -1) {
+    //     cout << "Element not found!" << endl;
+    // } else {
+    //     cout << "Your target element found in total " << totalOcc << " indexes" << endl;
+    // }
     return 0;
 }
