@@ -1,14 +1,22 @@
 #include<iostream>
 using namespace std;
 
+void changeSign(int* &ptr) {
+    *ptr = (*ptr) * -1;
+}
+
 int main() {
 
-    char* ptr;
-    char arr[] = "abcdefg";
+    int a = 10;
+    changeSign(&a);
+    cout << a << endl;
 
-    ptr = arr;
-    ptr += 5;
-    cout << ptr << endl;
+    // char* ptr;
+    // char arr[] = "abcdefg";
+
+    // ptr = arr;
+    // ptr += 5;
+    // cout << ptr << endl;
 
     // char arr[20];
     // int i;
