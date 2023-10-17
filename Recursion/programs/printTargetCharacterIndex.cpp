@@ -16,11 +16,11 @@ int main() {
     char ch[] = "Babbar";
     int n = sizeof(ch)/sizeof(ch[0]);
     int index = 0;
+    vector<int>& ans;
 
     char targetChar = 'a';
-    printAllOccOfACharacter(ch, n, index, targetChar);
+    printAllOccOfACharacter(ch, n, index, targetChar, ans);
 
-    
 
     return 0;
 }
