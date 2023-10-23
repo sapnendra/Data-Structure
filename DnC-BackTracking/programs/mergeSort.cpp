@@ -12,7 +12,7 @@ void merge(int arr[], int start, int end) {
 
     // copy values from original array to left array
     int k = start;
-	//k -> starting index of left array values in original arrya
+	//k -> starting index of left array values in original array
     for(int i=0; i<lenLeft; i++) {
         left[i] = arr[k];
         k++;
@@ -25,7 +25,7 @@ void merge(int arr[], int start, int end) {
         k++;
     }
 
-    // Actual merge logic here(using 2 pointee approach)
+    // Actual merge logic here(using 2 pointer approach)
     // left array is already sorted
     // right arary is already sorted
 
