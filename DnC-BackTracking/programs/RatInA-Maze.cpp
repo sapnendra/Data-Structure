@@ -6,12 +6,12 @@ using namespace std;
 //-> path closed
 //out if bound 
 // check is pos is already visited
-bool isSafe(int srcx, int srcy, int newx, int newy, int maze[][4], int row, int col,  vector<vector<bool > > &visited) {
+bool isSafe(int srcX, int srcY, int newX, int newY, int maze[][4], int row, int col,  vector<vector<bool > > &visited) {
 	if(
-		(newx >=0 && newx <row) &&
-		(newy >=0 && newy < col) &&
-		maze[newx][newy] == 1 &&
-		visited[newx][newy] == false
+		(newX >=0 && newX < row) &&
+		(newY >=0 && newY < col) &&
+		maze[newX][newY] == 1 &&
+		visited[newX][newY] == false
 		) {
 		return true;
 		}
@@ -20,71 +20,74 @@ bool isSafe(int srcx, int srcy, int newx, int newy, int maze[][4], int row, int 
 	}
 }
 
-void printAllPath(int maze[][4], int row, int col, int srcx, int srcy, string &output, vector<vector<bool > > &visited) {
+void printAllPath(int maze[][4], int row, int col, int srcX, int srcY, string &output, vector<vector<bool > > &visited) {
 
 	//base case
 	//destination coordinates are [row-1], [col-1]
-	if(srcx == row-1 && srcy == col-1) {
+	if(srcX == row-1 && srcY == col-1) {
 		//reached destination
 		cout << output << endl;
 		return;
 	}
 
-	// One case solution and other, Recursion will handle it
+	// One case solution and other, Recursion will handle
 	//UP
-	int newx = srcx-1;
-	int newy = srcy;
-	if(isSafe(srcx, srcy, newx, newy,maze,row,col,visited )) {
+	int newX = srcX-1;
+	int newY = srcY;
+	if(isSafe(srcX, srcY, newX, newY, maze, row, col,  visited)) {
 		//mark visited
-		visited[newx][newy] = true;
-		//call recursion
+		visited[newX][newY] = true;
 		output.push_back('U');
-		printAllPath(maze, row, col, newx, newy, output , visited );
+        //call recursion
+		printAllPath(maze, row, col, newX, newY, output , visited);
 		//backtracking
 		output.pop_back();
-		visited[newx][newy] = false;
+        //mark unvisited
+		visited[newX][newY] = false;
 	}
 
 	//RIGHT
-	 newx = srcx;
-	 newy = srcy+1;
-	if(isSafe(srcx, srcy, newx, newy,maze,row,col,visited )) {
+	 newX = srcX;
+	 newY = srcY+1;
+	if(isSafe(srcX, srcY, newX, newY, maze, row, col, visited)) {
 		//mark visited
-		visited[newx][newy] = true;
+		visited[newX][newY] = true;
+        output.push_back('R');
 		//call recursion
-		output.push_back('R');
-		printAllPath(maze, row, col, newx, newy, output , visited );
+		printAllPath(maze, row, col, newX, newY, output , visited);
 		//backtracking
 		output.pop_back();
-		visited[newx][newy] = false;
+        //mark unvisited
+		visited[newX][newY] = false;
 	}
 
 	//DOWN
-	newx = srcx+1;
-	 newy = srcy;
-	if(isSafe(srcx, srcy, newx, newy,maze,row,col,visited )) {
+	newX = srcX+1;
+	 newY = srcY;
+	if(isSafe(srcX, srcY, newX, newY,maze,row,col,visited )) {
 		//mark visited
-		visited[newx][newy] = true;
-		//call recursion
+		visited[newX][newY] = true;
 		output.push_back('D');
-		printAllPath(maze, row, col, newx, newy, output , visited );
+        //call recursion
+		printAllPath(maze, row, col, newX, newY, output , visited );
 		//backtracking
 		output.pop_back();
-		visited[newx][newy] = false;
+        //mark unvisited
+		visited[newX][newY] = false;
 	}
 
 	//LEFT
-	newx = srcx;
-	 newy = srcy-1;
-	if(isSafe(srcx, srcy, newx, newy,maze,row,col,visited )) {
+	newX = srcX;
+	newY = srcY-1;
+	if(isSafe(srcX, srcY, newX, newY,maze,row,col,visited )) {
 		//mark visited
-		visited[newx][newy] = true;
-		//call recursion
+		visited[newX][newY] = true;
 		output.push_back('L');
-		printAllPath(maze, row, col, newx, newy, output , visited );
+        //call recursion
+		printAllPath(maze, row, col, newX, newY, output , visited );
 		//backtracking
 		output.pop_back();
-		visited[newx][newy] = false;
+		visited[newX][newY] = false;
 	}
 	
 }
@@ -100,8 +103,8 @@ int main() {
 	int row = 4;
 	int col = 4;
 
-	int srcx = 0;
-	int srcy = 0;
+	int srcX = 0;
+	int srcY = 0;
 	string output = "";
 
 	//craete visited 2D ARRAY
@@ -112,8 +115,8 @@ int main() {
 		cout << "No Path Exists" << endl;
 	}
 	else {
-		visited[srcx][srcy] = true;
-		printAllPath(maze, row, col, srcx, srcy, output, visited);
+		visited[srcX][srcY] = true;
+		printAllPath(maze, row, col, srcX, srcY, output, visited);
 	}
 	return 0;
 }
