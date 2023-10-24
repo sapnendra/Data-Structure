@@ -47,8 +47,8 @@ void printAllPath(int maze[][4], int row, int col, int srcX, int srcY, string &o
 	}
 
 	//RIGHT
-	 newX = srcX;
-	 newY = srcY+1;
+	newX = srcX;
+	newY = srcY+1;
 	if(isSafe(srcX, srcY, newX, newY, maze, row, col, visited)) {
 		//mark visited
 		visited[newX][newY] = true;
