@@ -7,19 +7,23 @@ int isTargetExistInArray(int arr[], int n, int target) {
     int mid = s + (e-s)/2;
 
     while(s <= e) {
+
         if(arr[mid-1] == target && mid-1 >= 0) {
             return mid-1;
-        } else if(arr[mid] == target) {
+        } 
+        else if(arr[mid] == target) {
             return mid;
-        } else if(arr[mid+1] == target && mid+1 < n) {
+        } 
+        else if(arr[mid+1] == target && mid+1 < n) {
             return mid+1;
-        } else if(target > arr[mid]) {
+        } 
+        else if(target > arr[mid]) {
             // right
             s = mid+2;
-        } else {
-
+        } 
+        else {
             // left
-            e = mid-2;
+            e = mid-2; 
         }
         mid = s + (e-s)/2;
     }
