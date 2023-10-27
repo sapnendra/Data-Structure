@@ -20,7 +20,7 @@ bool isSafe(int srcX, int srcY, int newX, int newY, int maze[][4], int row, int 
 	}
 }
 
-void printAllPath(int maze[][4], int row, int col, int srcX, int srcY, string &output, vector<vector<bool > > &visited) {
+void printAllPath(int maze[][4], int row, int col, int srcX, int srcY, string &output, vector<vector<bool>> &visited) {
 
 	//base case
 	//destination coordinates are [row-1], [col-1]
@@ -30,7 +30,7 @@ void printAllPath(int maze[][4], int row, int col, int srcX, int srcY, string &o
 		return;
 	}
 
-	// One case solution and other, Recursion will handle
+	// One case solution for all directions and other, Recursion will handle
 	//UP
 	int newX = srcX-1;
 	int newY = srcY;
@@ -108,8 +108,8 @@ int main() {
 	string output = "";
 
 	//craete visited 2D ARRAY
-	vector<vector<bool > > visited(row, vector<bool>(col, false));
-	
+	vector<vector<bool>> visited(row, vector<bool>(col, false));
+
 	if(maze[0][0] == 0) {
 		//src position is Closed, that means RAT cannot move
 		cout << "No Path Exists" << endl;
