@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void mergeInPlace(vector<int> &arr, vector<int> &arr2) {
+void mergeUsingGap(vector<int> &arr, vector<int> &arr2) {
     int n = arr.size();
     int m = arr2.size();
     int totalSize = n+m;
