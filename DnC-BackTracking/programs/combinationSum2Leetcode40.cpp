@@ -22,14 +22,14 @@ vector<vector<int>> combinationSum2(vector<int>& arr, int target) {
     vector<int> temp;
     vector<vector<int>> ans;
     combinationSum2Helper(arr, target, temp, ans, 0);
-    // set<vector<int>> st;
-    // for(auto it: ans) {
-    //     st.insert(it);
-    // }
-    // ans.clear();
-    // for(auto it: st) {
-    //     ans.push_back(it);
-    // }
+    /* set<vector<int>> st;
+    for(auto it: ans) {
+        st.insert(it);
+    }
+    ans.clear();
+    for(auto it: st) {
+        ans.push_back(it);
+    } */
     return ans;
 }
 
