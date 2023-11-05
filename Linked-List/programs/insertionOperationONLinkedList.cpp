@@ -19,6 +19,15 @@ public:
     }
 };
 
+int findLength(Node* head) {
+    Node* temp = head;
+    int count = 0;
+    while(temp != NULL) {
+        count++;
+    }
+    return count;
+}
+
 void print(Node* head)
 {
     Node* temp = head;
@@ -69,6 +78,37 @@ void insertAtTail(Node* &head, Node* &tail, int data) {
     }
 }
 
+void insertAtPosition(Node* &head, Node* &tail, int data, int position) {
+    int length = findLength(head);
+    
+    if(position <= 1) {
+        // insert at head position
+        insertAtTail(head, tail, data);
+    }
+    else if(position > length+1) {
+        // insert at tail position
+        insertAtTail(head, tail, data);
+    }
+    else {
+        // insert at middle of the linked list
+
+        // step1: create a new node
+        Node* newNode = new Node(data);
+        Node* prev = NULL;
+        Node* curr = head;
+
+        //step2: traverse prev/curr pointers till position
+        while(position != 1) {
+            prev = curr;
+            curr = curr->next;
+            position--;
+        }
+        //step3: attach newNode to prev and curr pointers
+        prev->next = newNode;
+        newNode->next = curr;
+    }
+}
+
 int main()
 {
     Node* head = NULL;
@@ -103,6 +143,11 @@ int main()
     print(head);
 
     insertAtTail(head, tail, 100);
+    print(head);
+
+    // inserting at any position
+
+    insertAtPosition(head, tail, 5, 1);
     print(head);
 
     return 0;
