@@ -18,10 +18,22 @@ public:
 
 void print(Node* head) {
     Node* temp = head;
+
     while(temp != NULL) {
-        cout << temp->data << "->";
+        cout << temp->data << " -> ";
         temp = temp->next;
     }
+    
+}
+
+void lengthOfTheList(Node* head) {
+    Node* temp = head;
+    int count = 0;
+    while(temp != NULL) {
+        count++;
+        temp = temp->next;
+    }
+    cout << "Length of the list: " << count << endl;
 }
 
 int main() {
@@ -43,5 +55,6 @@ int main() {
     cout << "Printng entire list: " << endl;
     print(head);
 
+    cout << endl;
     return 0;
 }
