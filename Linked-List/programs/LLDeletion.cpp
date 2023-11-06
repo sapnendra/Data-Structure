@@ -14,7 +14,7 @@ public:
         this->next = NULL;
     }
     ~Node(){
-        cout << "Distructor called for: " << this-data << endl;
+        cout << "Distructor called for: " << this->data << endl;
     }
 };
 
@@ -23,6 +23,7 @@ int findLength(Node* head) {
     int count = 0;
     while(temp != NULL) {
         count++;
+        temp = temp->next;
     }
     return count;
 }
@@ -78,14 +79,13 @@ void insertAtTail(Node* &head, Node* &tail, int data) {
 }
 
 void insertAtPosition(Node* &head, Node* &tail, int data, int position) {
-
     int length = findLength(head);
-    
     if(position <= 1) {
         // insert at head position
         insertAtHead(head, tail, data);
     }
-    else if(position > length+1) {
+    
+    else if(position >= length) {
         // insert at tail position
         insertAtTail(head, tail, data);
     }
@@ -95,8 +95,7 @@ void insertAtPosition(Node* &head, Node* &tail, int data, int position) {
         // step1: create a new node
         Node* newNode = new Node(data);
         Node* prev = NULL;
-        Node* curr = head;
-
+        Node* curr = head;        
         //step2: traverse prev/curr pointers till position
         while(position != 1) {
             prev = curr;
@@ -115,8 +114,20 @@ void deleteNode(Node* &head, Node* &tail, int position) {
     if(head == NULL) {
         // LL is empty
         cout << "List is empty" << endl;
+        return;
     }
-    else if(position == 1) {
+
+    else if(head == tail) {
+        // single element in LL
+        Node* temp = head;
+        delete temp;
+        head = NULL;
+        tail = NULL;
+        return;
+    }
+
+
+    else if(position <= 1) {
         // first node ko delete kardo
         // step1: create a temporary Node
         Node* temp = head;
@@ -127,7 +138,7 @@ void deleteNode(Node* &head, Node* &tail, int position) {
         // memory free
         delete temp;
 
-    } else if(position == length) {
+    } else if(position >= length) {
         // last node delete kardo
         Node* prev = head;
 
@@ -135,8 +146,8 @@ void deleteNode(Node* &head, Node* &tail, int position) {
         while(prev->next != tail) {
             prev = prev->next;
         }
-        
-        // step2: point next of prev to NULL for isolate tail node
+
+        // step2: point prev->next to NULL for isolate tail node
         prev->next = NULL;
 
         // step3: memory free by deleting isolated node called tail
@@ -148,7 +159,25 @@ void deleteNode(Node* &head, Node* &tail, int position) {
     } else {
         // middile node delete kardo
 
+        Node* prev = NULL;
+        Node* curr = head;
+        // step1: traverse prev and curr pointer to position
+        while(position != 1) {
+            prev = curr;
+            curr = curr->next;
+            position--;
+        }
+
+        // step2: point prev->next to curr->next for isolating the curr node
+        prev->next = curr->next;
+
+        // step3: point curr-next to NULL
+        curr->next = NULL;
+
+        // mermory free by deleting curr node
+        delete curr;
     }
+    return;
 }
 
 
@@ -171,18 +200,12 @@ int main() {
     insertAtTail(head, tail, 90);
     insertAtTail(head, tail, 100);
 
-    cout << "I reach here after tail" << endl;
-
     // inserting at any position
-    insertAtPosition(head, tail, 5, 1);
+    insertAtPosition(head, tail, 60, 1);
     print(head);
-
-    cout << "I reach after insert any position" << endl;
-
+    cout << "Length of LL is : " << findLength(head) << endl;
     // node deletion
-    deleteNode(head, tail, 1);
+    deleteNode(head, tail, 9);
     print(head);
-
-    cout << "I reach here third" << endl;
     return 0;
 }
