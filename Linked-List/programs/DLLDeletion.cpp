@@ -136,6 +136,36 @@ void deleteNode(Node* &head, Node* &tail, int position) {
         head->prev = NULL;
         delete temp;
     }
+
+    else if(position >= length) {
+        // delete from tail
+        Node* prevNode = tail -> prev;
+        prevNode->next = NULL;
+        tail-> prev = NULL;
+        delete tail;
+        tail = prevNode;
+    }
+
+    else {
+        // step1: set prevNode/currNode/nextNode to position
+        Node* prevNode = NULL;
+        Node* currNode = head;
+        while(position != 1) {
+            prevNode = currNode;
+            currNode = currNode->next;
+            position--;
+        }
+        Node* nextNode = currNode->next;
+        
+        // step2: attach accordingly
+        prevNode->next = nextNode;
+        currNode->prev = NULL;
+        currNode->next = NULL;
+        nextNode->prev = prevNode;
+
+        // step3: memory free
+        delete currNode;
+    }
 }
 
 int main() {
@@ -146,26 +176,31 @@ int main() {
     insertAtHead(head, tail, 10);
     insertAtHead(head, tail, 20);
     insertAtHead(head, tail, 30);
-    cout <<"Insertion at head" << endl;
-    print(head);
+    // cout <<"Insertion at head" << endl;
+    // print(head);
 
     // insert at tail
-    insertAtTail(head, tail, 10);
-    insertAtTail(head, tail, 20);
-    insertAtTail(head, tail, 30);
-    cout <<"Insertion at tail" << endl;
-    print(head);
+    insertAtTail(head, tail, 40);
+    insertAtTail(head, tail, 50);
+    insertAtTail(head, tail, 60);
+    // cout <<"Insertion at tail" << endl;
+    // print(head);
 
     // insert at any position
     insertAtPosition(head, tail, 5, 4);
-    cout <<"Insertion at any position" << endl;
+    // cout <<"Insertion at any position" << endl;
+
     print(head);
+    cout <<"Length of the LL is : " << findLength(head) << endl;
 
     // deletion 
-    deleteNode(head, tail, 1);
-    print(head);
+    // deleteNode(head, tail, 1);
+    // print(head);
 
-    cout << "I reached here" << endl;
+    deleteNode(head, tail, 4);
+    print(head);
+    cout <<"Length of the LL is : " << findLength(head) << endl;
+
 
     return 0;
 }
