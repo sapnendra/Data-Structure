@@ -1,21 +1,20 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-class Node
-{
+class Node{
 public:
     int data;
     Node* next;
-
-    Node()
-    {
+    
+    Node() {
         this->next = NULL;
     }
-
-    Node(int data)
-    {
+    Node(int data) {
         this->data = data;
         this->next = NULL;
+    }
+    ~Node(){
+        cout << "Distructor called for: " << this-data << endl;
     }
 };
 
@@ -79,11 +78,12 @@ void insertAtTail(Node* &head, Node* &tail, int data) {
 }
 
 void insertAtPosition(Node* &head, Node* &tail, int data, int position) {
+
     int length = findLength(head);
     
     if(position <= 1) {
         // insert at head position
-        insertAtTail(head, tail, data);
+        insertAtHead(head, tail, data);
     }
     else if(position > length+1) {
         // insert at tail position
@@ -109,51 +109,80 @@ void insertAtPosition(Node* &head, Node* &tail, int data, int position) {
     }
 }
 
-int main()
-{
+
+void deleteNode(Node* &head, Node* &tail, int position) {
+    int length = findLength(head);
+    if(head == NULL) {
+        // LL is empty
+        cout << "List is empty" << endl;
+    }
+    else if(position == 1) {
+        // first node ko delete kardo
+        // step1: create a temporary Node
+        Node* temp = head;
+        // step2: update head
+        head = head->next;
+        // step3: isolate the temp node
+        temp->next = NULL;
+        // memory free
+        delete temp;
+
+    } else if(position == length) {
+        // last node delete kardo
+        Node* prev = head;
+
+        // step1: traverse till second last node - prev
+        while(prev->next != tail) {
+            prev = prev->next;
+        }
+        
+        // step2: point next of prev to NULL for isolate tail node
+        prev->next = NULL;
+
+        // step3: memory free by deleting isolated node called tail
+        delete tail;
+
+        // step4: uppdate tail to prev
+        tail = prev; 
+
+    } else {
+        // middile node delete kardo
+
+    }
+}
+
+
+int main() {
+
     Node* head = NULL;
     Node* tail = NULL;
 
     // inserting at tail position
-
     insertAtHead(head, tail, 10);
-    print(head);
-
     insertAtHead(head, tail, 20);
-    print(head);
-
     insertAtHead(head, tail, 30);
-    print(head);
-
     insertAtHead(head, tail, 40);
-    print(head);
-
     insertAtHead(head, tail, 50);
-    print(head);
 
     // inserting at tail position
-
     insertAtTail(head, tail, 60);
-    print(head);
-
     insertAtTail(head, tail, 70);
-    print(head);
-
     insertAtTail(head, tail, 80);
-    print(head);
-
     insertAtTail(head, tail, 90);
-    print(head);
-
     insertAtTail(head, tail, 100);
-    print(head);
+
+    cout << "I reach here after tail" << endl;
 
     // inserting at any position
-
     insertAtPosition(head, tail, 5, 1);
     print(head);
 
-    cout << "Hi" << endl;
+    cout << "I reach after insert any position" << endl;
 
+    // node deletion
+    deleteNode(head, tail, 1);
+    print(head);
+
+    cout << "I reach here third" << endl;
     return 0;
 }
