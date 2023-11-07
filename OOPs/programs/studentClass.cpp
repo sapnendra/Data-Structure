@@ -26,7 +26,8 @@ class Student{
 };
 
 int main() {
-    Student golu;
-    golu.sleep();
+    cout << "Size of student class: " << sizeof(Student) << endl;
+    // Student golu;
+    // golu.sleep();
     return 0;
 }
