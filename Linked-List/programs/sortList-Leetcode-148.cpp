@@ -44,7 +44,7 @@ Node* findMid(Node* head) {
     Node* fast = head;
     while(fast != NULL) {
         fast = fast->next;
-        if(fast->next != NULL) {
+        if(fast != NULL) {
             fast = fast->next;
             slow = slow->next;
         }
@@ -53,41 +53,48 @@ Node* findMid(Node* head) {
 }
 
 Node* merge(Node* left, Node* right) {
+
+    if(left == NULL) return right;
+    if(right == NULL) return left;
+
     Node* dummyNode = new Node(-1);
-    Node* listPtr = dummyNode;
+    Node* dummyNodePtr = dummyNode;
     while(left != NULL && right != NULL) {
         if(left->data < right->data) {
-            listPtr = left;
+            dummyNodePtr = left;
             left = left->next;
         } else {
-            listPtr = right;
+            dummyNodePtr = right;
             right = right->next;
         }
-        listPtr = listPtr->next;
+        dummyNodePtr = dummyNodePtr->next;
     }
 
     while(left != NULL) {
-        listPtr = left;
+        dummyNodePtr = left;
         left = left->next;
-        listPtr = listPtr->next;
+        dummyNodePtr = dummyNodePtr->next;
     }
     
     while(right != NULL) {
-        listPtr = right;
+        dummyNodePtr = right;
         right = right->next;
-        listPtr = listPtr->next;
+        dummyNodePtr = dummyNodePtr->next;
     }
 
     return dummyNode->next;
 }
 
 Node* sortList(Node* &head) {
+    if(head == NULL || head->next == NULL)
+        return head;
+
     Node* mid = findMid(head);
     Node* left = head;
     Node* right = mid->next;
     mid->next = NULL;
 
-    left = sortList(left);
+    left = sortList(left);    
     right = sortList(right);
 
     Node* result = merge(left, right);
@@ -107,7 +114,7 @@ int main() {
         insertAtTail(head, tail, data);
     }
     cout << "Your List: " << endl;
-    Node* sortListHead = sortList(head);
-    print(sortListHead);
+    Node* sortedListHead = sortList(head);
+    print(sortedListHead);
     return 0;
 }
