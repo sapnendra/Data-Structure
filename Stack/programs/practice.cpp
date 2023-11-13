@@ -37,7 +37,7 @@ public:
     }
 
     void push(int data) {
-        if(top == size) {
+        if(top == size-1) {
             cout << "Stack Overflow" << endl;
             return;
         } else {
