@@ -61,7 +61,7 @@ Node* merge(Node* left, Node* right) {
     Node* dummyNodePtr = dummyNode;
     while(left != NULL && right != NULL) {
         if(left->data < right->data) {
-            dummyNodePtr = left;
+            dummyNodePtr->next = left;
             left = left->next;
         } else {
             dummyNodePtr = right;
@@ -71,15 +71,15 @@ Node* merge(Node* left, Node* right) {
     }
 
     while(left != NULL) {
-        dummyNodePtr = left;
+        dummyNodePtr->next = left;
+        dummyNode = left;
         left = left->next;
-        dummyNodePtr = dummyNodePtr->next;
     }
     
     while(right != NULL) {
+        dummyNodePtr->next = right;
         dummyNodePtr = right;
         right = right->next;
-        dummyNodePtr = dummyNodePtr->next;
     }
 
     return dummyNode->next;
@@ -99,22 +99,4 @@ Node* sortList(Node* &head) {
 
     Node* result = merge(left, right);
     return result;
-}
-
-int main() {
-    Node* head = NULL;
-    Node* tail = NULL;
-    int n;
-    cout << "Enter the number of data in list: ";
-    cin >> n;
-    cout << "Enter data: " << endl;
-    for(int i=0; i<n; i++) {
-        int data;
-        cin >> data;
-        insertAtTail(head, tail, data);
-    }
-    cout << "Your List: " << endl;
-    Node* sortedListHead = sortList(head);
-    print(sortedListHead);
-    return 0;
 }
