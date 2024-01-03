@@ -2,83 +2,45 @@
 #include<stack>
 using namespace std;
 
-// void inBuiltFunction() {
-//     stack<int> st;
-//     st.push(10);
-//     st.push(20);
-//     st.push(30);
-//     st.push(40);
-//     // porinting size of the stack
-//     cout <<"Size of the array is: " << st.size() << endl;
-//     // perfored pop operation
-//     st.pop();
-//     cout << "Size after pop operation performed: " << st.size() << endl;
-//     //checking stack is empty or not
-//     if(st.empty()) {
-//         cout << "Your stack is empty" << endl;
-//     } else {
-//         cout << "Your stack is non-empty" << endl;
-//     }
-//     // printing top element of the stack
-//     cout << "Top element of the stack: " << st.top() << endl;
-// }
+bool check_RedundantBracket(string str) {
+    stack<char> st;
 
-class Stack{
-public: 
-    int *arr;
-    int top;
-    int size;
-
-public:
-    Stack(int size) {
-        arr = new int[size];
-        this->size = size;
-        this->top = -1;
-    }
-
-    void push(int data) {
-        if(top == size-1) {
-            cout << "Stack Overflow" << endl;
-            return;
-        } else {
-            top++;
-            arr[top] = data;
+    for(int i=0; i<str.length(); i++) {
+        char ch = str[i];
+        if(ch == '(' || ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+            st.push(ch);
+        }
+        else if(ch == ')'){
+            int operator_count = 0;
+            while(!st.empty() && st.top() != '(') {
+                char temp = st.top();
+                if(temp == '+' || temp == '-' || temp == '*' || temp == '/') {
+                    operator_count++;
+                }
+                st.pop();
+            }
+            st.pop();
+            if(operator_count == 0) {
+                return true;
+            }
         }
     }
-
-    void pop() {
-        if(top == -1) {
-            cout << "Stack Underflow" << endl;
-            return;
-        } else {
-            top--;
-        }
-    }
-
-    int getSize(){
-        return top+1;
-    }
-
-    bool isEmpty() {
-        if(top == -1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    int getTop() {
-        if(top == -1) {
-            cout << "Stack is empty" << endl;
-        } else {
-            return arr[top];
-        }
-    }
-};
+    /*
+    agar main yaha tk pahucha hu
+    iska matlab k har ek bracket k pair k bich me 
+    ek operator pakka mila hoga
+    */
+    return false;
+}
 
 int main() {
-
-    Stack st(10);
-
+    string str = "(((a+b)*(c+d)))";
+    bool ans = check_RedundantBracket(str);
+    if(ans == true) {
+        cout << "Redundant bracket present" << endl;
+    }
+    else {
+        cout << "Redundant bracket not present" << endl;
+    }
     return 0;
 }
