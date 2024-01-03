@@ -34,14 +34,14 @@ public:
 
     void pop1() {
         if(top1 == -1) {
-            cout << "Stack-One Underflow" << endl;
+            cout << "Stack-One is Underflow" << endl;
         }
         top1--;
     }
 
     void pop2() {
         if(top2 == size) {
-            cout << "Stack-Two Underflow" << endl;
+            cout << "Stack-Two is Underflow" << endl;
         }
         top2++;
     }
