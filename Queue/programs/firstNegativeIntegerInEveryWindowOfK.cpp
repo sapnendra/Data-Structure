@@ -32,15 +32,13 @@ void printFirstNegativeInWindow(int *arr, int n, int window) {
         // addition
         if(arr[index] < 0) {
             dq.push_back(index);
-        }
-
-
-        // answer for last window 
-        if(dq.empty()) {
-            cout << "0" << endl;
-        } else {
-            cout << arr[dq.front()] << " ";
-        }
+        } 
+    }
+    // answer for last window 
+    if(dq.empty()) {
+        cout << "0" << endl;
+    } else {
+        cout << arr[dq.front()] << " ";
     }
 }
 
