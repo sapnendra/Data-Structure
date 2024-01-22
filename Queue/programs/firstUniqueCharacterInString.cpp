@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-    string str = "loveleetcode";
+    string str = "ababc";
     queue<char> q;
     int freq[26] = {0};
 
@@ -12,14 +12,14 @@ int main() {
         freq[ch-'a']++;
         q.push(ch);
 
-        // find the answer
+        // find answer
         while(!q.empty()) {
             char frontCharacter = q.front();
             if(freq[frontCharacter-'a'] > 1) {
                 // it means this is not an answer
                 q.pop();
             } else {
-                // particular character not repeating - means this is the answer
+                // particular character not repeating -> means this is the answer
                 cout << frontCharacter << "->";
                 break;
             }
