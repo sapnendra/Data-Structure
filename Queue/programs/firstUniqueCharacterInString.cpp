@@ -3,7 +3,7 @@
 using namespace std;
 
 int main() {
-    string str = "ababc";
+    string str = "facfdcad";
     queue<char> q;
     int freq[26] = {0};
 
