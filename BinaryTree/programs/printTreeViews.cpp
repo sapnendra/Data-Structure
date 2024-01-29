@@ -109,18 +109,18 @@ void printLeftView(Node* root, int level, vector<int> &leftView) {
     printLeftView(root->right, level+1, leftView);
 }
 
-void printRightView(Node* root, int level, vector<int> &leftView) {
+void printRightView(Node* root, int level, vector<int> &rightView) {
     //base case
     if(root == NULL) return;
 
-    if(level == leftView.size()) {
+    if(level == rightView.size()) {
         // It means we found left view node, then store it in vector
-        leftView.push_back(root->data);
+        rightView.push_back(root->data);
     }
 
     // recursion
-    printRightView(root->right, level+1, leftView);
-    printRightView(root->left, level+1, leftView);
+    printRightView(root->right, level+1, rightView);
+    printRightView(root->left, level+1, rightView);
 }
 
 void printTopView(Node* root) {
