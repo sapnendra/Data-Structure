@@ -1,5 +1,5 @@
-#include <iostream>
-#include <queue>
+#include<iostream>
+#include<queue>
 using namespace std;
 
 class Node
@@ -17,39 +17,18 @@ public:
     }
 };
 
-Node* insertIntoBST(Node *root, int data)
-{
-    if (root == NULL)
-    {
-        root = new Node(data);
-        return root;
+// max value
+Node* findMaxValueNode(Node* root) {
+    if(root == NULL) {
+        return NULL;
+    }
+    Node* temp = root;
+
+    while(temp->right != NULL) {
+        temp = temp->right;
     }
 
-    // its not the first node
-    if (data > root->data)
-    {
-        root->right = insertIntoBST(root->right, data);
-    }
-    else
-    {
-        root->left = insertIntoBST(root->left, data);
-    }
-
-    return root;
-}
-
-void createBST(Node* &root)
-{
-    cout << "Enter Data : ";
-    int data;
-    cin >> data;
-
-    while (data != -1)
-    {
-        root = insertIntoBST(root, data);
-        cout << "Enter data : ";
-        cin >> data;
-    }
+    return temp;
 }
 
 void levelOrderTraversal(Node *root)
@@ -86,65 +65,23 @@ void levelOrderTraversal(Node *root)
     }
 }
 
-// preorder
-void preorder(Node* root) {
-    if(root == NULL) {
-        return;
-    }
 
-    cout << root->data << " ";
-    preorder(root->left);
-    preorder(root->right);
-}
 
-// inorder
-void inorder(Node* root) {
-    if(root == NULL) {
-        return;
-    }
-
-    inorder(root->left);
-    cout << root->data << " ";
-    inorder(root->right);
-}
-
-// postorder
-void postorder(Node* root) {
-    if(root == NULL) {
-        return;
-    }
-
-    postorder(root->left);
-    postorder(root->right);
-    cout << root->data << " ";
-}
-
-// min value
-Node* findMinValueNode(Node* root) {
-    if(root == NULL) {
+Node* createBSTFromInorder(int inorder[], int start, int end) {
+    if(start > end) {
         return NULL;
     }
-    Node* temp = root;
 
-    while(temp->left != NULL) {
-        temp = temp->left;
-    }
+    // we neew to solve only one case
+    int mid = (start + end)/2;
+    int element = inorder[mid];
+    Node* root = new Node(element);
 
-    return temp;
-}
+    // and other recursion will handle it
+    root->left = createBSTFromInorder(inorder, start, mid-1);
+    root->right = createBSTFromInorder(inorder, mid+1, end);
 
-// max value
-Node* findMaxValueNode(Node* root) {
-    if(root == NULL) {
-        return NULL;
-    }
-    Node* temp = root;
-
-    while(temp->right != NULL) {
-        temp = temp->right;
-    }
-
-    return temp;
+    return root;
 }
 
 Node* deleteFromBST(Node* root, int target) {
@@ -199,12 +136,14 @@ Node* deleteFromBST(Node* root, int target) {
     return root;
 }
 
-int main()
-{
-    Node *root = NULL;
-    createBST(root);
-    
-    cout << endl << "Level Order Traversal : "<< endl;
+int main() {
+    int inorder[] = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 65, 70, 75, 80};
+    int start = 0;
+    int end = sizeof(inorder)/sizeof(int) - 1;
+
+    Node* root = createBSTFromInorder(inorder, start, end);
+
+    cout << "Printing level order traversal : "<< endl;
     levelOrderTraversal(root);
 
     int target;
@@ -219,20 +158,6 @@ int main()
         cout << "Enter the value of target : ";
         cin >> target;
     }
-
-    // Node* minNode = findMinValueNode(root);
-    // if(minNode == NULL) {
-    //     cout << "Entire tree in NULL, No such value exist." << endl;
-    // } else {
-    //     cout << "Min value node is : " << minNode->data << endl;
-    // }
-
-    // cout << endl << "Pre-Order Traversal : "<< endl;
-    // preorder(root);
-    // cout << endl << "In-Order Traversal : "<< endl;
-    // inorder(root);
-    // cout << endl << "Post-Order Traversal : "<< endl;
-    // postorder(root);
 
     return 0;
 }
