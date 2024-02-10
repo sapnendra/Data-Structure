@@ -158,13 +158,13 @@ Node* deleteFromBST(Node* root, int target) {
         // target found delete now
         // 4 cases
 
-        // 1st case -> leaf node
         if(root->left == NULL && root->right == NULL) {
+            // 1st case -> leaf node
             delete root;
             return NULL;
         }
         else if(root->left != NULL && root->right == NULL) {
-            // 2nd case -> right non-NULL and right NULL 
+            // 2nd case -> left non-NULL and right NULL 
             Node* childSubtree = root->left;
             delete root;
             return childSubtree;
@@ -176,9 +176,8 @@ Node* deleteFromBST(Node* root, int target) {
             return childSubtree;
         }
         else {
-            // 4rt case -> left non-NULL and right non-NULL
-
-            // step1 : bring maximum node from left
+            // 4rth case -> left non-NULL and right non-NULL
+            // step1 : bring maximum node from left subtree
             Node* leftMaxi = findMaxValueNode(root->left);
             // step2 : replacement
             root->data = leftMaxi->data;
@@ -197,6 +196,64 @@ Node* deleteFromBST(Node* root, int target) {
 
     return root;
 }
+
+// Lakshya Bhaiya Approach
+class Solution {
+public:
+    Node* deleteNode(Node* root, int key) {
+        if(!root) return 0;
+        if(root->data == key) {
+            if(!root->left && !root->right) {
+                // case 1: leaf node  
+                delete root;
+                return 0;
+            }
+            else if(!root->left) {
+                // case 2: root->left = null, root->right != null
+                auto temp = root;
+                root = root->right;
+                delete temp;
+                return root;
+            }
+            else if(!root->right) {
+                // case 3: root->left != NULL, root->right = NULL 
+                auto temp = root;
+                root = root->left;
+                delete temp;
+                return root;
+            }
+           else {
+#if 0
+//                 case 4: root->left == NULL, root->right == NULL 
+//                 find minimum of right subtree  
+//                 auto rscan = root->right;
+//                 while(rscan->left) 
+//                     rscan = rscan->left;
+//                 rscan->left = root->left;
+//                 auto temp = root;
+//                 root = root->right;
+//                 delete temp;
+//                 return root; 
+#endif
+                // case 4: root->left != NULL, root->right != NULL
+                // find maximum element from left subtree
+                auto lscan = root->left;
+                while(lscan->right)
+                    lscan = lscan->right;
+                lscan->right = root->right;
+                auto temp = root;
+                root = root->left;
+                delete temp;
+                return root;
+            }
+        }
+        if(key < root->data)
+            root->left = deleteNode(root->left, key);
+        else
+            root->right = deleteNode(root->right, key);
+        return root;
+    }
+};
 
 int main()
 {
