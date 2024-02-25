@@ -15,29 +15,25 @@ public:
     }
 };
 
-pair<bool, int> solve(Node *root) {
+bool solve(Node *root) {
     // base case
     if (root == NULL) {
-        pair<bool, int> p = make_pair(true, INT_MIN);
+        bool p = true;
         return p;
     }
     if (root->left == NULL && root->right == NULL) {
         // leaf node
-        pair<bool, int> p = make_pair(true, root->data);
-        return p;
+        return true;
     }
 
-    pair<bool, int> leftAns = solve(root->left);
-    pair<bool, int> rightAns = solve(root->right);
+    bool leftAns = solve(root->left);
+    bool rightAns = solve(root->right);
 
-    if (leftAns.first == true && rightAns.first == true && root->data > leftAns.second && root->data > rightAns.second) {
-        pair<bool, int> p = make_pair(true, root->data);
-        return p;
+    if (leftAns && rightAns) {
+        return true;
     }
-
     else {
-        pair<bool, int> p = make_pair(false, root->data);
-        return p;
+        return false;
     }
 }
 

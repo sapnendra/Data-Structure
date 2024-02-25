@@ -24,7 +24,7 @@ class Heap{
       int index = size;
       arr[index] = val;
 
-      ///take the val to its cvorrect position
+      ///take the val to its correct position
       while(index > 1) {
         int parentIndex = index/2;
         if(arr[index] > arr[parentIndex]) {
