@@ -1,4 +1,4 @@
-// approach1: Usind map(visited address)
+// approach1: Using map(visited address)
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
