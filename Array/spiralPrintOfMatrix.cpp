@@ -6,7 +6,7 @@ int main() {
     int col;
     cin >> row >> col;
 
-    int matrix[row][col];
+    int matrix[5][5];
 
     for(int i=0; i<row; i++) {
         for(int j=0; j<col; j++) {

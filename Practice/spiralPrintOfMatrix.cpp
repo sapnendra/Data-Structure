@@ -2,7 +2,11 @@
 using namespace std;
 
 void spiralPrint(int arr[][3], int size) {
-    
+    for(int i=0; i<size; i++) {
+        for(int j=i; j<size; j++) {
+            swap(arr[i][j], arr[j][i]);
+        }
+    }
 }
 
 int main() {
@@ -18,7 +22,6 @@ int main() {
         for(int j=0; j<n; j++) {
             cout << arr[i][j] << " ";
         }
-        cout << endl;
     }
     return 0;
 }
