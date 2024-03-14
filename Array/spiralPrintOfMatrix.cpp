@@ -1,5 +1,41 @@
 #include<iostream>
+#include<vector>
 using namespace std;
+
+void spiralPrint(int matrix[][5], int row, int col,  vector<int> &ans) {
+    int strRow = 0;
+    int endCol = col-1;
+    int endRow = row-1;
+    int strCol = 0;
+    vector<int> ans;
+    
+    int totalEle = row*col;
+    while(totalEle--) {
+        // starting row
+        for(int i=strCol; i<=endCol; i++) {
+            ans.push_back(matrix[strRow][i]);
+        }
+        strRow++;
+
+        // ending column
+        for(int i=strRow; i<=endRow; i++) {
+            ans.push_back(matrix[i][endCol]);
+        }
+        endCol--;
+
+        // ending row
+        for(int i=endCol; i>=strCol; i--) {
+            ans.push_back(matrix[endRow][i]);
+        }
+        endRow--;
+
+        // starting col
+        for(int i=endRow; i>=strRow; i--) {
+            ans.push_back(matrix[i][strCol]);
+        }
+        strCol--; 
+    }
+}
 
 int main() {
     int row;
@@ -15,37 +51,10 @@ int main() {
     }
 
     cout << "Spiral print of a matrix: "<< endl;
-    int strRow = 0;
-    int endCol = col-1;
-    int endRow = row-1;
-    int strCol = 0;
-    
-    int totalEle = row*col;
-    while(totalEle--) {
-        // starting row
-        for(int i=strCol; i<=endCol; i++) {
-            cout << matrix[strRow][i] <<" ";
-        }
-        strRow++;
-
-        // ending column
-        for(int i=strRow; i<=endRow; i++) {
-            cout << matrix[i][endCol] << " ";
-        }
-        endCol--;
-
-        // ending row
-        for(int i=endCol; i>=strCol; i--) {
-            cout << matrix[endRow][i] << " ";
-        }
-        endRow--;
-
-        // starting col
-        for(int i=endRow; i>=strRow; i--) {
-            cout << matrix[i][strCol];
-        }
-        strCol--; 
+    vector<int> ans;
+    spiralPrint(matrix, row, col, ans);
+    for(int i=0; i<ans.size(); i++) {
+        cout << matrix[i] << " ";
     }
-    cout << endl;
     return 0;
 }
