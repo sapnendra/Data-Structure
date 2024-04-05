@@ -17,7 +17,7 @@ void spiralPrint(int matrix[][5], int row, int col,  vector<int> &ans) {
         }
         strRow++;
 
-        // ending column
+        // ending columnQ
         for(int i=strRow; i<=endRow; i++) {
             ans.push_back(matrix[i][endCol]);
         }
