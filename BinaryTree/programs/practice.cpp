@@ -43,108 +43,26 @@ void preOrder(Node* root) {
     preOrder(root->right);
 }
 
-void inOrder(Node* root) {
-    //base case
-    if(root == NULL) {
-        return;
-    }
-
-    inOrder(root->left);
-    cout << root->data << " ";
-    inOrder(root->right);
-}
-
-void postOrder(Node* root) {
+Node* lowestCommonAncestor(Node* root, Node* p, Node* q) {
     // base case
-    if(root == NULL) {
-        return;
+    if(root == NULL) return NULL;
+    if(root->data == p->data) return p;
+    if(root->data == q->data) return q;
+
+    // one case
+    Node* leftAns = lowestCommonAncestor(root->left, p, q);
+    Node* rightAns = lowestCommonAncestor(root->right, p, q);
+
+    if(leftAns != NULL && rightAns != NULL) {
+        return root;
     }
-
-    postOrder(root->left);
-    postOrder(root->right);
-    cout << root->data << " ";
-}
-
-void levelOrder(Node* root) {
-    //base case
-    if(root == NULL) return;
-
-    queue<Node*> q;
-    q.push(root);
-    q.push(NULL);
-
-    while(!q.empty()) {
-        Node* temp = q.front();
-        q.pop();
-
-        if(temp == NULL) {
-            cout << endl;
-            if(!q.empty()) q.push(NULL);
-        }
-        else {
-            cout << temp->data << " ";
-            if(temp->left != NULL) {
-                q.push(temp->left);
-            }
-            if(temp->right != NULL) {
-                q.push(temp->right);
-            }
-        }
+    else if(leftAns != NULL && rightAns == NULL) {
+        return leftAns;
     }
-}
-
-void printLeftView(Node* root, int level, vector<int> &leftView) {
-    //base case
-    if(root == NULL) return;
-
-    if(level == leftView.size()) {
-        // It means we found left view node, then store it in vector
-        leftView.push_back(root->data);
+    else if(leftAns == NULL && rightAns != NULL) {
+        return rightAns;
     }
-
-    // recursion
-    printLeftView(root->left, level+1, leftView);
-    printLeftView(root->right, level+1, leftView);
-}
-
-void printRightView(Node* root, int level, vector<int> &leftView) {
-    //base case
-    if(root == NULL) return;
-
-    if(level == leftView.size()) {
-        // It means we found left view node, then store it in vector
-        leftView.push_back(root->data);
-    }
-
-    // recursion
-    printRightView(root->right, level+1, leftView);
-    printRightView(root->left, level+1, leftView);
-}
-
-int main() {
-    Node* root = createTree();
-    cout << endl;
-    levelOrder(root);
-
-    int level = 0;
-    // vector<int> leftView;
-    vector<int> rightView;
-    // printLeftView(root, level, leftView);
-    printRightView(root, level, rightView);
-
-    // cout << "Left View of a Tree : "<< endl;
-    // for(auto it: leftView) {
-    //     cout << it << " ";
-    // }
-    // cout << endl;
-
-    cout << "Right View of a Tree : "<< endl;
-    for(auto it: rightView) {
-        cout << it << " ";
-    }
-    cout << endl;
-    
-    return 0;
+    else return NULL;
 }
 
 // 10 20 40 -1 -1 50 70 110 -1 -1 111 -1 -1 80 -1 -1 30 -1 60 -1 90 112 -1 -1 113 -1 -1
