@@ -1,68 +1,66 @@
 #include<iostream>
-#include<queue>
+#include<vector>
+
 using namespace std;
 
-class Node{
+class TreeNode{
 public:
     int data;
-    Node* left;
-    Node* right;
+    TreeNode* left;
+    TreeNode* right;
 
-    Node(int data) {
+    TreeNode(int data) {
         this->data = data;
         this->left = NULL;
         this->right = NULL;
     }
 };
 
-Node* createTree() {
-    cout << "Enter node data : ";
+// it returns root node of created tree
+TreeNode* createTree() {
+    cout<< "Enter value for Node : " << endl;
     int data;
     cin >> data;
 
-    if(data == -1) return NULL;
+    if(data == -1) {
+        return NULL;
+    }
 
-    Node* root = new Node(data);
+    //step1: create Node
+    TreeNode* root = new TreeNode(data);
 
-    cout << "Enter left node for - " << root->data << endl ;
+    // step2: create left subtree
+    // cout << "Left of Node : " << root->data << endl;
     root->left = createTree();
-    cout << "Enter right node for - " << root->data << endl ;
+
+    // step3: create right subtree
+    // cout << "Right of Node : " << root->data << endl;
     root->right = createTree();
 
     return root;
 }
 
-void preOrder(Node* root) {
-    //base case
-    if(root == NULL) {
-        return;
-    }
-
-    cout << root->data << " ";
-    preOrder(root->left);
-    preOrder(root->right);
-}
-
-Node* lowestCommonAncestor(Node* root, Node* p, Node* q) {
+TreeNode* kthAncestorOfNode(TreeNode* root, TreeNode* targetNode, int k) {
     // base case
-    if(root == NULL) return NULL;
-    if(root->data == p->data) return p;
-    if(root->data == q->data) return q;
+    if(root == NULL) {
+        return NULL;
+    }
 
-    // one case
-    Node* leftAns = lowestCommonAncestor(root->left, p, q);
-    Node* rightAns = lowestCommonAncestor(root->right, p, q);
 
-    if(leftAns != NULL && rightAns != NULL) {
-        return root;
-    }
-    else if(leftAns != NULL && rightAns == NULL) {
-        return leftAns;
-    }
-    else if(leftAns == NULL && rightAns != NULL) {
-        return rightAns;
-    }
-    else return NULL;
+    TreeNode* leftAns = kthAncestorOfNode(root->left, targetNode, k);
+    TreeNode* rightAns = kthAncestorOfNode(root->right, targetNode, k);
+
+    return NULL;
 }
 
-// 10 20 40 -1 -1 50 70 110 -1 -1 111 -1 -1 80 -1 -1 30 -1 60 -1 90 112 -1 -1 113 -1 -1
+int main() {
+    TreeNode* root = createTree();
+    TreeNode* targetNode = new TreeNode(80);
+    int k = 2;
+
+    TreeNode* kthAncestor = kthAncestorOfNode(root, targetNode, k);
+    cout << k << "th Ancestor of " << targetNode->data << " is : " << kthAncestor << endl;
+    return 0;
+}
+
+// 10 20 40 70 -1 -1 80 90 -1 -1 100 -1 -1 50 -1 -1 30 -1 60 -1 -1
