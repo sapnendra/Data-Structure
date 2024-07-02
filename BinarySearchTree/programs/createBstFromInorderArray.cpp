@@ -102,13 +102,13 @@ Node* deleteFromBST(Node* root, int target) {
             return NULL;
         }
         else if(root->left != NULL && root->right == NULL) {
-            // 2nd case -> right non-NULL and right NULL 
+            // 2nd case -> left non-NULL and right NULL 
             Node* childSubtree = root->left;
             delete root;
             return childSubtree;
         }
         else if(root->left == NULL && root->right != NULL) {
-            // 3rd case -> left NULL and right  non-NULL
+            // 3rd case -> left NULL and right non-NULL
             Node* childSubtree = root->right;
             delete root;
             return childSubtree;
@@ -117,11 +117,11 @@ Node* deleteFromBST(Node* root, int target) {
             // 4rt case -> left non-NULL and right non-NULL
 
             // step1 : bring maximum node from left
-            Node* leftMaxi = findMaxValueNode(root->left);
+            Node* leftMax = findMaxValueNode(root->left);
             // step2 : replacement
-            root->data = leftMaxi->data;
-            // step3 : delete leftMaxi node 
-            root->left = deleteFromBST(root->left, leftMaxi->data);
+            root->data = leftMax->data;
+            // step3 : delete leftMax node 
+            root->left = deleteFromBST(root->left, leftMax->data);
             return root;
         }
     }
@@ -132,7 +132,6 @@ Node* deleteFromBST(Node* root, int target) {
         // go to right side of the root
         root->right = deleteFromBST(root->right, target);
     }
-
     return root;
 }
 

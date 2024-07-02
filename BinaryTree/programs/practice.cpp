@@ -1,66 +1,217 @@
 #include<iostream>
+#include<queue>
+#include<map>
 #include<vector>
-
 using namespace std;
 
-class TreeNode{
+class Node{
 public:
     int data;
-    TreeNode* left;
-    TreeNode* right;
+    Node* left;
+    Node* right;
 
-    TreeNode(int data) {
+    Node(int data) {
         this->data = data;
         this->left = NULL;
         this->right = NULL;
     }
 };
 
-// it returns root node of created tree
-TreeNode* createTree() {
-    cout<< "Enter value for Node : " << endl;
+Node* createTree() {
+    cout << "Enter node data : ";
     int data;
     cin >> data;
 
-    if(data == -1) {
-        return NULL;
-    }
+    if(data == -1) return NULL;
 
-    //step1: create Node
-    TreeNode* root = new TreeNode(data);
+    Node* root = new Node(data);
 
-    // step2: create left subtree
-    // cout << "Left of Node : " << root->data << endl;
+    cout << "Enter left node for - " << root->data << endl ;
     root->left = createTree();
-
-    // step3: create right subtree
-    // cout << "Right of Node : " << root->data << endl;
+    cout << "Enter right node for - " << root->data << endl ;
     root->right = createTree();
 
     return root;
 }
 
-TreeNode* kthAncestorOfNode(TreeNode* root, TreeNode* targetNode, int k) {
-    // base case
+void preOrder(Node* root) {
+    //base case
     if(root == NULL) {
-        return NULL;
+        return;
     }
 
+    cout << root->data << " ";
+    preOrder(root->left);
+    preOrder(root->right);
+}
 
-    TreeNode* leftAns = kthAncestorOfNode(root->left, targetNode, k);
-    TreeNode* rightAns = kthAncestorOfNode(root->right, targetNode, k);
+void inOrder(Node* root) {
+    //base case
+    if(root == NULL) {
+        return;
+    }
 
-    return NULL;
+    inOrder(root->left);
+    cout << root->data << " ";
+    inOrder(root->right);
+}
+
+void postOrder(Node* root) {
+    // base case
+    if(root == NULL) {
+        return;
+    }
+
+    postOrder(root->left);
+    postOrder(root->right);
+    cout << root->data << " ";
+}
+
+void levelOrder(Node* root) {
+    //base case
+    if(root == NULL) return;
+
+    queue<Node*> q;
+    q.push(root);
+    q.push(NULL);
+
+    while(!q.empty()) {
+        Node* temp = q.front();
+        q.pop();
+
+        if(temp == NULL) {
+            cout << endl;
+            if(!q.empty()) q.push(NULL);
+        }
+        else {
+            cout << temp->data << " ";
+            if(temp->left != NULL) {
+                q.push(temp->left);
+            }
+            if(temp->right != NULL) {
+                q.push(temp->right);
+            }
+        }
+    }
+}
+
+void printLeftView(Node* root, int level, vector<int> &leftView) {
+    //base case
+    if(root == NULL) return;
+
+    if(level == leftView.size()) {
+        // It means we found left view node, then store it in vector
+        leftView.push_back(root->data);
+    }
+
+    // recursion
+    printLeftView(root->left, level+1, leftView);
+    printLeftView(root->right, level+1, leftView);
+}
+
+void printRightView(Node* root, int level, vector<int> &rightView) {
+    //base case
+    if(root == NULL) return;
+
+    if(level == rightView.size()) {
+        // It means we found left view node, then store it in vector
+        rightView.push_back(root->data);
+    }
+
+    // recursion
+    printRightView(root->right, level+1, rightView);
+    printRightView(root->left, level+1, rightView);
+}
+
+void printTopView(Node* root) {
+    map<int, int> hdToNodeMap;
+    queue<pair<Node*, int>> q;
+    q.push(make_pair(root, 0));
+
+    while(!q.empty()) {
+        pair<Node*, int> temp = q.front();
+        q.pop();
+        
+        Node* frontNode = temp.first;
+        int hd = temp.second;
+
+        // if there is no entry for hd in map, then create new entry
+        if(hdToNodeMap.find(hd) == hdToNodeMap.end()) {
+            hdToNodeMap[hd] = frontNode->data;
+        }
+
+        // processing for child Node
+        if(root->left != NULL) {
+            q.push(make_pair(root->left, hd-1));
+        }
+
+        if(root->right != NULL) {
+            q.push(make_pair(root->right, hd+1));
+        }
+    }
+
+    // printing top view
+    for(auto itr : hdToNodeMap) {
+        cout << itr.second << " ";
+    }
+    cout << endl;
+}
+
+void printBottomView(Node* root) {
+    map<int, int> hdToNodeMap;
+    queue<pair<Node*, int>> q;
+    q.push(make_pair(root, 0));
+
+    while(!q.empty()) {
+        pair<Node*, int> temp = q.front();
+        q.pop();
+
+        Node* frontNode = temp.first;
+        int hd = temp.second;
+
+        // overwrite answers so that the deeper nodes can be stored
+        hdToNodeMap[hd] = frontNode->data;
+
+        // look for the child
+        if(frontNode->left != NULL) {
+            q.push(make_pair(frontNode->left, hd-1));
+        }
+        if(frontNode->right != NULL) {
+            q.push(make_pair(frontNode->right, hd+1));
+        }
+    }
+    cout << "Printing bottom view : " << endl;
+    for(auto it : hdToNodeMap) {
+        cout << it.second << " ";
+    }
 }
 
 int main() {
-    TreeNode* root = createTree();
-    TreeNode* targetNode = new TreeNode(80);
-    int k = 2;
+    Node* root = createTree();
+    cout << endl;
+    levelOrder(root);
 
-    TreeNode* kthAncestor = kthAncestorOfNode(root, targetNode, k);
-    cout << k << "th Ancestor of " << targetNode->data << " is : " << kthAncestor << endl;
+    printBottomView(root);
+
+    // int level = 0;
+    // vector<int> leftView;
+    // vector<int> rightView;
+    // printLeftView(root, level, leftView);
+    // printRightView(root, level, rightView);
+
+    // cout << "Left View of a Tree : "<< endl;
+    // for(auto it: leftView) {
+    //     cout << it << " ";
+    // }
+    // cout << endl;
+
+    // cout << "Right View of a Tree : "<< endl;
+    // for(auto it: rightView) {
+    //     cout << it << " ";
+    // }
+    // cout << endl;
+    
     return 0;
 }
 
-// 10 20 40 70 -1 -1 80 90 -1 -1 100 -1 -1 50 -1 -1 30 -1 60 -1 -1
+// 10 20 40 -1 -1 50 70 110 -1 -1 111 -1 -1 80 -1 -1 30 -1 60 -1 90 112 -1 -1 113 -1 -1
